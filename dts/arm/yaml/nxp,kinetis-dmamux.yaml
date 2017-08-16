@@ -1,0 +1,35 @@
+---
+title: Kinetis DMAMUX
+id: nxp,kinetis-dmamux
+version: 0.1
+
+description: >
+    This binding gives a base representation of the Kinetis DMAMUX
+
+inherits:
+  - !include dma.yaml
+
+properties:
+  - compatible:
+      type: string
+      category: required
+      description: compatible strings
+      constraint: "nxp,kinetis-dmamux"
+
+  - reg:
+      type: array
+      description: mmio register space
+      generation: define
+      category: required
+
+  - clocks:
+      type: array
+      category: required
+      description: Clock gate control information
+      generation: structures
+
+cell_string: DMAMUX
+
+"#cells":
+  - channel
+...

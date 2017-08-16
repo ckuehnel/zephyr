@@ -242,6 +242,9 @@
 
 			gpio-controller;
 			#gpio-cells = <2>;
+
+			dma-controller;
+			dmas = <&dma0 1>;
 		};
 
 		gpiob: gpio@400ff040 {
@@ -358,6 +361,45 @@
 			interrupts = <73 0>;
 			label = "ADC_1";
 			status = "disabled";
+		};
+
+		dma0: dma@40008000 {
+			compatible = "nxp,kinetis-dma";
+			reg = <0x40008000 0x11fe>;
+			clocks = <&sim 0x1040 1>;
+			interrupts = <0 0>,
+				     <1 0>,
+				     <2 0>,
+				     <3 0>,
+				     <4 0>,
+				     <5 0>,
+				     <6 0>,
+				     <7 0>,
+				     <8 0>,
+				     <9 0>,
+				     <10 0>,
+				     <11 0>,
+				     <12 0>,
+				     <13 0>,
+				     <14 0>,
+				     <15 0>,
+				     <16 0>;
+			interrupt-names = "error";
+			label = "DMA_0";
+			#dma-cells = <1>;
+			dma-channels = <16>;
+			dma-requests = <16>;
+
+			status = "disabled";
+		};
+
+		dma_router: dma-router@40021000 {
+			compatible = "nxp,kinetis-dmamux";
+			reg = <0x40021000 0xf>;
+			clocks = <&sim 0x103c 1>;
+			#dma-cells = <1>;
+			dma-requests = <62>;
+			dma-masters = <&dma0>;
 		};
 	};
 };
