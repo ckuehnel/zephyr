@@ -1,0 +1,62 @@
+# Kconfig - SSD1306 display controller configuration options
+
+#
+# Copyright (c) 2018 Phytec Messtechnik GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+menuconfig SSD1306
+	bool "SSD1306 display driver"
+	depends on I2C
+	help
+	  Enable driver for SSD1306 display driver.
+
+if SSD1306
+
+if !HAS_DTS_I2C_DEVICE
+
+config SSD1306_DEV_NAME
+	string "SSD1306 device name"
+	  default "SSD1306"
+
+config SSD1306_I2C_ADDR
+	hex "I2C address for SSD1306 controller"
+	default "0x3c"
+	range 0x3c 0x3d
+	help
+	  I2C address of the SSD1306 controller.
+
+	  0x3c: SA connected GND
+	  0x3d: SA connected VDD
+
+config SSD1306_I2C_MASTER_DEV_NAME
+	string "I2C master where SSD1306 is connected"
+	default "I2C_0"
+	help
+	  The I2C master device's name where the SSD1306 controller is connected.
+
+endif # !HAS_DTS_I2C_DEVICE
+
+config SSD1306_DEFAULT_CONTRAST
+	int "SSD1306 default contrast"
+	default 128
+	range 0 255
+	help
+	  SSD1673 default contrast.
+
+choice
+	prompt "Display controller type"
+	default SSD1306_DEFAULT
+	help
+	  Specify the type of the controller.
+
+config SSD1306_DEFAULT
+	bool "Default SSD1306 controller"
+
+config SSD1306_SH1106_COMPATIBLE
+	bool "Enable SH1106 compatible mode"
+
+endchoice
+
+endif #SSD1306
