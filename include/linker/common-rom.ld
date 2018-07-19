@@ -73,3 +73,10 @@
 		KEEP(*(".log_backends"));
 		__log_backends_end = .;
 	} GROUP_LINK_IN(ROMABLE_REGION)
+
+	SECTION_DATA_PROLOGUE(font_entry_sections, (OPTIONAL),)
+	{
+		__font_entry_start = .;
+		KEEP(*(SORT_BY_NAME(".font_entry.*")))
+		__font_entry_end = .;
+	} GROUP_LINK_IN(ROMABLE_REGION)
