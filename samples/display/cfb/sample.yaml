@@ -1,0 +1,7 @@
+sample:
+  name: cfb sample
+tests:
+  test:
+    platform_whitelist: reel_board
+    tags: samples display
+    depends_on: spi gpio
