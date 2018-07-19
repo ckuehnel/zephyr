@@ -1,0 +1,112 @@
+# Kconfig - SSD1673 display controller configuration options
+
+#
+# Copyright (c) 2018 Phytec Messtechnik GmbH
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+menuconfig SSD1673
+	bool "SSD1673 display driver"
+	depends on SPI
+	help
+	  Enable driver for SSD1673 display driver.
+
+if SSD1673
+
+config SSD1673_DEV_NAME
+	string "SSD1673 device name"
+	  default "SSD1673"
+
+config SSD1673_SPI_DEV_NAME
+	string "SPI master where SSD1673 is connected"
+	default "SPI_0"
+	help
+	  Specify the device name of the SPI master device to which SSD1673 is
+	  connected.
+
+config SSD1673_SPI_SLAVE_NUMBER
+	int "SPI Slave number where SSD1673 is connected"
+	default 0
+	help
+	  The number of the slave on the host controller to which SSD1673 is
+	  connected.
+
+config SSD1673_SPI_FREQ
+	int "SPI Frequency"
+	default 4000000
+	help
+	  Frequency to be used to communicate with the SSD1673.
+
+config SSD1673_SPI_GPIO_CS
+	bool "Manage SPI CS through a GPIO pin"
+	help
+	  Manage SPI CS through a GPIO pin
+
+config SSD1673_SPI_GPIO_CS_DRV_NAME
+	string "SPI CS GPIO controller port name"
+	depends on SSD1673_SPI_GPIO_CS
+	help
+	  SPI CS GPIO controller port name
+
+config SSD1673_SPI_GPIO_CS_PIN
+	int "SPI CS GPIO controller pin"
+	default 0
+	depends on SSD1673_SPI_GPIO_CS
+	help
+	  SPI CS GPIO controller pin
+
+config SSD1673_RESET_GPIO_PORT_NAME
+	string "Reset GPIO controller port name"
+	default "GPIO_0"
+	help
+	  GPIO controller where the interrupt pin is attached to.
+
+config SSD1673_RESET_PIN
+	int "SSD1673 Reset pin"
+	default 0
+	help
+	  SSD1673 reset pin.
+
+config SSD1673_DC_GPIO_PORT_NAME
+	string "Data/Command GPIO controller port name"
+	default "GPIO_0"
+	help
+	  GPIO controller where the Data/Command pin is attached to.
+
+config SSD1673_DC_PIN
+	int "SSD1673 Data/Command pin"
+	default 1
+	help
+	  SSD1673 Data/Command pin.
+
+config SSD1673_BUSY_GPIO_PORT_NAME
+	string "Busy GPIO controller port name"
+	default "GPIO_0"
+	help
+	  GPIO controller where the Busy pin is attached to.
+
+config SSD1673_BUSY_PIN
+	int "SSD1673 Busy pin"
+	default 1
+	help
+	  SSD1673 Busy pin.
+
+config SSD1673_ORIENTATION_FLIPPED
+	bool "SSD1673 orientation flipped"
+	help
+	  SSD1673 orientation flipped.
+
+choice
+	prompt "EPD display"
+	default SSD1673_EPD_GDE0213B1
+	help
+	  Specify the type of EPD connected to the SSD1673 controller.
+
+config SSD1673_EPD_GDE0213B1
+	bool
+	prompt "GDE0213B1 2.13\""
+
+endchoice
+
+endif #SSD1673
