@@ -28,7 +28,26 @@ extern "C" {
 #endif
 
 enum display_pixel_format {
-	PIXEL_FORMAT_RGB_888 = (1 << 0),
+	PIXEL_FORMAT_RGB_888		= BIT(0),
+	PIXEL_FORMAT_MONO01		= BIT(1), /* 0=Black 1=White */
+	PIXEL_FORMAT_MONO10		= BIT(2), /* 1=Black 0=White */
+};
+
+enum display_screen_info {
+	/**
+	 * If selected, one octet represents 8 pixels ordered vertically,
+	 * otherwise ordered horizontally.
+	 */
+	SCREEN_INFO_MONO_VTILED		= BIT(0),
+	/**
+	 * If selected, the MSB represents the first pixel,
+	 * otherwise MSB represents the last pixel.
+	 */
+	SCREEN_INFO_MONO_MSB_FIRST	= BIT(1),
+	/**
+	 * Electrophoretic Display.
+	 */
+	SCREEN_INFO_EPD			= BIT(2),
 };
 
 /**
@@ -44,6 +63,9 @@ enum display_pixel_format {
  * @var display_capabilities::supported_pixel_formats
  * Bitwise or of pixel formats supported by the display
  *
+ * @var display_capabilities::screen_info
+ * Information about display panel
+ *
  * @var display_capabilities::current_pixel_format
  * Currently active pixel format for the display
  *
@@ -52,6 +74,7 @@ struct display_capabilities {
 	u16_t x_resolution;
 	u16_t y_resolution;
 	u32_t supported_pixel_formats;
+	u32_t screen_info;
 	enum display_pixel_format current_pixel_format;
 };
 
